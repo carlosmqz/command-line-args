@@ -2,7 +2,16 @@ const fs = require('fs')
 const util = require('util')
 
 const getNotes = function(){
-    return 'Your notes...'
+    const notes = 
+        fs.promises.readFile('notes.json').then(function(data){
+            const jsonDataArray = JSON.parse(Buffer.from(data).toString());
+            jsonDataArray.forEach(note => {
+                console.log('Title: '+note.title+'\n Body: '+ note.body+'\n');
+            });
+        }).catch(function(error){
+            console.log('Error: '+ error)
+        })
+
 }
 const addNote = function(title, body){
     const notes = 
